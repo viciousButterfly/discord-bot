@@ -13,6 +13,11 @@ bot = commands.Bot(command_prefix="$", intents=intents)
 async def hello(ctx):
     await ctx.send(f"Hello! {ctx.author.mention}")
 
+
+@bot.command()
+async def socials(ctx):
+    await ctx.send("Checkout our socials : \nInstagram: https://www.instagram.com/cofsug/ \nLinkedIn: https://www.linkedin.com/company/coep-s-free-software-users-group/ \n")
+
 @bot.event
 async def on_ready():
     print(f"Logged in as {bot.user.name}")
