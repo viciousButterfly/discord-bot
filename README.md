@@ -5,7 +5,7 @@
 ```
 sudo apt install python3
 ```
-#### If pip3 doesn't exits, install manually by running the commands:
+##### If pip3 doesn't exit, install manually:
 ```
 wget https://bootstrap.pypa.io/get-pip.py
 ```
