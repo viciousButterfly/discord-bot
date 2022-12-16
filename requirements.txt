@@ -1,2 +1,4 @@
-nextcord==2.3.2
-python-dotenv==0.21.0
+nextcord>=2.3.2
+python-dotenv>=0.21.0
+attrs>=22.1.0
+bs4>=0.0.1
