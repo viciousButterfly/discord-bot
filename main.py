@@ -3,6 +3,7 @@ from nextcord.ext import commands
 import os
 from dotenv import load_dotenv
 import scrapper 
+import github
 
 
 intents = nextcord.Intents.default()
@@ -28,7 +29,16 @@ async def article(ctx):
     alt,href = scrapper.itsfoss()
     await ctx.send("{}\n{}".format(alt,href))
 
+@bot.command(name="github")
+async def repositories(ctx,arg):
+    repos = github.scrape(arg)
+    message = "Here are Top {} repos:".format(len(repos))
+
+    for item in repos:
+        message+="\n- Name : {}\n- Link : {}".format(item[0],item[1])
+
+    await ctx.send(message)
+
 if __name__ == "__main__": 
     load_dotenv()
     bot.run(os.getenv("DISCORD_TOKEN"))  
-
