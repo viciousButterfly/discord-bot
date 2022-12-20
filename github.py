@@ -3,7 +3,7 @@ import requests
 def scrape(arg):
 
     # Making a GET request
-    r = requests.get(url='https://api.github.com/search/repositories?q={}'.format(arg))
+    r = requests.get(url='https://api.github.com/search/repositories?q={}&page=1&per_page=5'.format(arg))
 
     # Extracting json
     data = r.json()
