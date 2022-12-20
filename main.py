@@ -1,5 +1,6 @@
 import nextcord
 from nextcord.ext import commands
+from nextcord import Embed
 import os
 from dotenv import load_dotenv
 import scrapper 
@@ -14,6 +15,18 @@ import random
 intents = nextcord.Intents.default()
 intents.message_content = True
 bot = commands.Bot(command_prefix="!", intents=intents)
+bot.remove_command("help")
+
+@bot.command(name="help")
+async def Help(ctx):
+    embed=Embed(color=0x0080ff, title="Bot Commands")
+    embed.add_field(name="Command: hi", value="**Syntax: !hi** \n**_Use:_** Greets you...", inline=False)
+    embed.add_field(name="Command: cofsug", value="**Syntax: !cofsug**\n**_Use:_** Get information about CoFSUG.", inline=False)
+    embed.add_field(name="Command: socials", value="**Syntax: !socials**\n**_Use:_** Get social media handles of CoFSUG.", inline=False)
+    embed.add_field(name="Command: github", value="**Syntax: !github name**\n**_Use:_** Gives top 5 GitHub repos on topic 'name'", inline=False)
+    embed.add_field(name="Command: foss", value="**Syntax: !foss**\n**_Use:_** Get latest blog from itsfoss.", inline=False)
+    embed.add_field(name="Command: poll", value="**Syntax: !poll choice1 choice2 question**\n**_Use:_** Creates a poll for you :)", inline=False)
+    await ctx.send(embed=embed)
 
 #
 # @returns greeting message
@@ -126,7 +139,7 @@ async def schedule_daily_message():
 @bot.event
 async def on_ready():
     print(f"Logged in as {bot.user.name}")
-    await schedule_daily_message()
+    #await schedule_daily_message()
 
 
 #
