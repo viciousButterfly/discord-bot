@@ -49,7 +49,8 @@ async def article(ctx):
 #
 @bot.command(name="cofsug")
 async def cofsug(ctx):
-    await ctx.send("COEP's Free Software Users Group is a community of enthusiasts who promote the use of Free Softwares and are strong supporters of Free and Open Source Ideology! ✨")
+    await ctx.send("COEP's Free Software Users Group is a community of enthusiasts who promote the use of Free Softwares and are strong supporters of Free and Open Source Ideology! ✨ \n\n ")
+    await ctx.send("*Checkout our socials :* \n**Instagram** : https://www.instagram.com/cofsug/ \n**LinkedIn** : https://www.linkedin.com/company/coep-s-free-software-users-group/ \n **dev.to (blogs)** : https://dev.to/cofsug \n\n")
 
 #
 # @returns finds top5 repos for the given argument
