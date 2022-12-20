@@ -105,13 +105,59 @@ async def poll(ctx,choice1,choice2,*,topic):
     embed = nextcord.Embed(title=topic, description=f"1️⃣\t{choice1}\n2️⃣\t{choice2}",timestamp=datetime.datetime.now(IST),color=nextcord.Color.green())
     embed.set_footer(text=f"Poll by {ctx.author.name}")
     # below url link temporary for now 
-    embed.set_thumbnail(url="https://media.discordapp.net/attachments/1035419482476269598/1036862785365221406/Untitled_design1.png?width=581&height=436")
+    embed.set_thumbnail(url=ctx.message.author.display_avatar)
     react = await ctx.send(embed=embed)
 
     await react.add_reaction("1️⃣")
     await react.add_reaction("2️⃣")
 
     await ctx.message.delete()
+
+#
+# @returns profile information
+#
+@bot.command(name="profile")
+async def Profile(ctx):
+    user = ctx.message.author
+    embed = Embed(title=user,color=nextcord.Color.green())
+    userData = {
+        "ID" : user.id,
+        "Nick": user.nick,
+        "Top role" : user.top_role,
+        "Created at" : user.created_at.strftime("%b %d, %Y"),
+        "Joined at" : user.joined_at.strftime("%b %d, %Y"),
+        "Server" : user.guild
+    }
+
+    for [name,value] in userData.items():
+        embed.add_field(name=name, value=value,inline=True)
+    
+    embed.set_thumbnail(url=user.display_avatar) 
+    
+    await ctx.send(embed=embed)
+
+
+#
+# @returns server information
+#
+@bot.command(name="server")
+async def Server(ctx):
+    guild = ctx.message.author.guild
+    embed = Embed(title=guild.name,color=nextcord.Color.green())
+    serverData = {
+        "Owner" : "CoFSUG",
+        "Channels" : len(guild.channels),
+        "Members" : guild.member_count,
+        "Description" : guild.description
+    }
+
+    for [name,value] in serverData.items():
+        embed.add_field(name=name, value=value,inline=False) 
+
+    embed.set_footer(text=f"id: {guild.id}")
+    embed.set_thumbnail(url="https://media.discordapp.net/attachments/1035419482476269598/1036862785365221406/Untitled_design1.png?width=581&height=436") 
+
+    await ctx.send(embed=embed)
 
 
 #
