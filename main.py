@@ -6,6 +6,7 @@ import scrapper
 import github
 import datetime
 import pytz
+import asyncio
 
 
 intents = nextcord.Intents.default()
@@ -73,6 +74,7 @@ async def poll(ctx,choice1,choice2,*,topic):
     IST = pytz.timezone('Asia/Kolkata')
     embed = nextcord.Embed(title=topic, description=f"1️⃣\t{choice1}\n2️⃣\t{choice2}",timestamp=datetime.datetime.now(IST),color=nextcord.Color.green())
     embed.set_footer(text=f"Poll by {ctx.author.name}")
+    # below url link temporary for now 
     embed.set_thumbnail(url="https://media.discordapp.net/attachments/1035419482476269598/1036862785365221406/Untitled_design1.png?width=581&height=436")
     react = await ctx.send(embed=embed)
 
@@ -90,12 +92,33 @@ async def poll(ctx,choice1,choice2,*,topic):
 async def clear(ctx, amount = 5):
     await ctx.channel.purge(limit=amount)
 
+
+#
+# @returns a daily scheduled message
+#
+async def schedule_daily_message():
+    now = datetime.datetime.now()
+    # then = now + datetime.timedelta(days=1)
+    then = now.replace(hour=13,minute=38)
+    wait_time = (then-now).total_seconds()
+
+    await asyncio.sleep(wait_time)
+
+    channel = bot.get_channel(1054287735646584905)
+
+    alt,href = scrapper.itsfoss()
+
+    await channel.send("{}\n{}".format(alt,href))
+
+
 #
 # @returns printing bot is ready on terminal
 #
 @bot.event
 async def on_ready():
     print(f"Logged in as {bot.user.name}")
+    await schedule_daily_message()
+
 
 #
 # @handles Handlind errors
