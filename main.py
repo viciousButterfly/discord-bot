@@ -4,9 +4,11 @@ import os
 from dotenv import load_dotenv
 import scrapper 
 import github
+import utils
 import datetime
 import pytz
 import asyncio
+import random
 
 
 intents = nextcord.Intents.default()
@@ -17,8 +19,15 @@ bot = commands.Bot(command_prefix="!", intents=intents)
 # @returns greeting message
 #
 @bot.command()
-async def hello(ctx):
-    await ctx.send(f"Hello! {ctx.author.mention}")
+async def hi(ctx):
+    greetings = [
+        "I hope you're doing well.",
+        "I hope you're having a great week.",
+        "I hope you're having a wonderful day.",
+        "Thanks for getting in touch.",
+        "Happy {}.".format(utils.findDay())
+    ]
+    await ctx.send(f"Hello! {ctx.author.mention}, {random.choice(greetings)}")
 
 #
 # @returns cofsug socials
