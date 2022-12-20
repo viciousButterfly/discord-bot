@@ -22,3 +22,4 @@ def itsfoss():
     href = a.get('href')
 
     return alt,href
+
