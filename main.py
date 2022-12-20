@@ -17,16 +17,6 @@ intents.message_content = True
 bot = commands.Bot(command_prefix="!", intents=intents)
 bot.remove_command("help")
 
-@bot.command(name="help")
-async def Help(ctx):
-    embed=Embed(color=0x0080ff, title="Bot Commands")
-    embed.add_field(name="Command: hi", value="**Syntax: !hi** \n**_Use:_** Greets you...", inline=False)
-    embed.add_field(name="Command: cofsug", value="**Syntax: !cofsug**\n**_Use:_** Get information about CoFSUG.", inline=False)
-    embed.add_field(name="Command: socials", value="**Syntax: !socials**\n**_Use:_** Get social media handles of CoFSUG.", inline=False)
-    embed.add_field(name="Command: github", value="**Syntax: !github name**\n**_Use:_** Gives top 5 GitHub repos on topic 'name'", inline=False)
-    embed.add_field(name="Command: foss", value="**Syntax: !foss**\n**_Use:_** Get latest blog from itsfoss.", inline=False)
-    embed.add_field(name="Command: poll", value="**Syntax: !poll choice1 choice2 question**\n**_Use:_** Creates a poll for you :)", inline=False)
-    await ctx.send(embed=embed)
 
 #
 # @returns greeting message
@@ -42,12 +32,29 @@ async def hi(ctx):
     ]
     await ctx.send(f"Hello! {ctx.author.mention}, {random.choice(greetings)}")
 
+
+#
+# @returns help messages for bot commands
+#
+@bot.command(name="help")
+async def Help(ctx):
+    embed=Embed(color=0x0080ff, title="Bot Commands")
+    embed.add_field(name="Command: hi", value="**Syntax: !hi** \n**_Use:_** Greets you...", inline=False)
+    embed.add_field(name="Command: cofsug", value="**Syntax: !cofsug**\n**_Use:_** Get information about CoFSUG.", inline=False)
+    embed.add_field(name="Command: socials", value="**Syntax: !socials**\n**_Use:_** Get social media handles of CoFSUG.", inline=False)
+    embed.add_field(name="Command: github", value="**Syntax: !github name**\n**_Use:_** Gives top 5 GitHub repos on topic 'name'", inline=False)
+    embed.add_field(name="Command: foss", value="**Syntax: !foss**\n**_Use:_** Get latest blog from itsfoss.", inline=False)
+    embed.add_field(name="Command: poll", value="**Syntax: !poll choice1 choice2 question**\n**_Use:_** Creates a poll for you :)", inline=False)
+    await ctx.send(embed=embed)
+
+
 #
 # @returns cofsug socials
 #
 @bot.command()
 async def socials(ctx):
     await ctx.send("*Checkout our socials :* \n**Instagram** : https://www.instagram.com/cofsug/ \n**LinkedIn** : https://www.linkedin.com/company/coep-s-free-software-users-group/ \n **dev.to (blogs)** : https://dev.to/cofsug \n\n")
+
 
 #
 # @returns scraps itsfoss's recent blog
@@ -57,6 +64,7 @@ async def article(ctx):
     alt,href = scrapper.itsfoss()
     await ctx.send("{}\n{}".format(alt,href))
 
+
 #
 # @returns information about cofsug
 #
@@ -64,6 +72,8 @@ async def article(ctx):
 async def cofsug(ctx):
     await ctx.send("COEP's Free Software Users Group is a community of enthusiasts who promote the use of Free Softwares and are strong supporters of Free and Open Source Ideology! ✨ \n\n ")
     await ctx.send("**Visit our website** : https://foss.coep.org.in/cofsug")
+
+
 #
 # @returns finds top5 repos for the given argument
 #
@@ -73,7 +83,6 @@ async def repositories(ctx,arg):
     repos = github.scrape(arg)
     names = []
     links = []
-
     for item in repos:
         names.append(item[0])
         links.append(item[1])
@@ -84,9 +93,8 @@ async def repositories(ctx,arg):
     embed = nextcord.Embed(title="Github",color=nextcord.Color.green())
     embed.add_field(name="Name", value=names, inline="true")
     embed.add_field(name="Link", value=links, inline="true")
-
-
     await ctx.send(embed=embed)
+
 
 #
 # @returns creates a poll
@@ -123,13 +131,10 @@ async def schedule_daily_message():
     # then = now + datetime.timedelta(days=1)
     then = now.replace(hour=13,minute=38)
     wait_time = (then-now).total_seconds()
-
     await asyncio.sleep(wait_time)
-
+    # Channel ID to be changed according to server
     channel = bot.get_channel(1054287735646584905)
-
     alt,href = scrapper.itsfoss()
-
     await channel.send("{}\n{}".format(alt,href))
 
 
@@ -143,7 +148,7 @@ async def on_ready():
 
 
 #
-# @handles Handlind errors
+# @handles Handling errors
 #
 @bot.event
 async def on_command_error(ctx, error):
