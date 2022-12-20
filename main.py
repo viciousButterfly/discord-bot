@@ -34,7 +34,7 @@ async def hi(ctx):
 #
 @bot.command()
 async def socials(ctx):
-    await ctx.send("*Checkout our socials :* \n**Instagram** : https://www.instagram.com/cofsug/ \n**LinkedIn** : https://www.linkedin.com/company/coep-s-free-software-users-group/ \n **dev.to (blogs) : https://dev.to/cofsug \n\n")
+    await ctx.send("*Checkout our socials :* \n**Instagram** : https://www.instagram.com/cofsug/ \n**LinkedIn** : https://www.linkedin.com/company/coep-s-free-software-users-group/ \n **dev.to (blogs)** : https://dev.to/cofsug \n\n")
 
 #
 # @returns scraps itsfoss's recent blog
