@@ -90,7 +90,9 @@ async def poll(ctx,choice1,choice2,*,topic):
 async def clear(ctx, amount = 5):
     await ctx.channel.purge(limit=amount)
 
-# printing bot is ready on terminal
+#
+# @returns printing bot is ready on terminal
+#
 @bot.event
 async def on_ready():
     print(f"Logged in as {bot.user.name}")
