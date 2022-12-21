@@ -212,7 +212,7 @@ async def Server(ctx):
 #
 # @returns clear messages (only for role with name='Admin')
 #
-@bot.command()
+@bot.command(name="clear")
 @commands.has_role('Admin')
 async def Clear(ctx, amount = 5):
     await ctx.channel.purge(limit=amount)
