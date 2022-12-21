@@ -21,7 +21,7 @@ bot.remove_command("help")
 #
 # @returns greeting message
 #
-@bot.command()
+@bot.command(name="hi")
 async def greeting(ctx):
     greetings = [
         "I hope you're doing well.",
@@ -122,6 +122,27 @@ async def Poll(ctx,choice1,choice2,*,topic):
     await react.add_reaction("2️⃣")
 
     await ctx.message.delete()
+
+
+# #
+# # @returns creates a poll
+# #
+# @bot.command(name="poll")
+# async def Poll(ctx,choice1,choice2,*,topic):
+#     IST = pytz.timezone('Asia/Kolkata')
+#     embed = nextcord.Embed(title=topic, 
+#                         description=f"1️⃣\t{choice1}\n2️⃣\t{choice2}",
+#                         timestamp=datetime.datetime.now(IST),
+#                         color=nextcord.Color.green())
+
+#     embed.set_footer(text=f"Poll by {ctx.author.name}")
+#     embed.set_thumbnail(url=ctx.message.author.display_avatar)
+#     react = await ctx.send(embed=embed)
+
+#     await react.add_reaction("1️⃣")
+#     await react.add_reaction("2️⃣")
+
+#     await ctx.message.delete()
 
 
 #
