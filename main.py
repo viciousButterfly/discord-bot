@@ -22,7 +22,7 @@ bot.remove_command("help")
 # @returns greeting message
 #
 @bot.command()
-async def hi(ctx):
+async def greeting(ctx):
     greetings = [
         "I hope you're doing well.",
         "I hope you're having a great week.",
@@ -38,29 +38,34 @@ async def hi(ctx):
 #
 @bot.command(name="help")
 async def Help(ctx):
-    embed=Embed(color=0x0080ff, title="Bot Commands")
+    embed=Embed(title="Bot Commands", color=0x0080ff)
+
     embed.add_field(name="Command: hi", value="**Syntax: !hi** \n**_Use:_** Greets you...", inline=False)
     embed.add_field(name="Command: cofsug", value="**Syntax: !cofsug**\n**_Use:_** Get information about CoFSUG.", inline=False)
     embed.add_field(name="Command: socials", value="**Syntax: !socials**\n**_Use:_** Get social media handles of CoFSUG.", inline=False)
-    embed.add_field(name="Command: github", value="**Syntax: !github name**\n**_Use:_** Gives top 5 GitHub repos on topic 'name'", inline=False)
+    embed.add_field(name="Command: github", value="**Syntax: !github arg**\n**_Use:_** Get top 5 GitHub repos on given argument", inline=False)
     embed.add_field(name="Command: foss", value="**Syntax: !foss**\n**_Use:_** Get latest blog from itsfoss.", inline=False)
-    embed.add_field(name="Command: poll", value="**Syntax: !poll choice1 choice2 question**\n**_Use:_** Creates a poll for you :)", inline=False)
+    embed.add_field(name="Command: poll", value="**Syntax: !poll choice1 choice2 Question**\n**_Use:_** Creates a poll for you :)", inline=False)
+    embed.add_field(name="Command: profile", value="**Syntax: !profile**\n**_Use:_** Displays your information", inline=False)
+    embed.add_field(name="Command: server", value="**Syntax: !server**\n**_Use:_** Displays server information", inline=False)
+    embed.add_field(name="Command: ping", value="**Syntax: !ping**\n**_Use:_** Displays user latency", inline=False)
+
     await ctx.send(embed=embed)
 
 
 #
 # @returns cofsug socials
 #
-@bot.command()
-async def socials(ctx):
-    await ctx.send("*Checkout our socials :* \n**Instagram** : https://www.instagram.com/cofsug/ \n**LinkedIn** : https://www.linkedin.com/company/coep-s-free-software-users-group/ \n **dev.to (blogs)** : https://dev.to/cofsug \n\n")
+@bot.command(name="socials")
+async def Socials(ctx):
+    await ctx.send("*Checkout our socials :* \n**Instagram** : https://www.instagram.com/cofsug/ \n**LinkedIn** : https://www.linkedin.com/company/coep-s-free-software-users-group/ \n**dev.to** : https://dev.to/cofsug \n\n")
 
 
 #
 # @returns scraps itsfoss's recent blog
 #
 @bot.command(name="foss")
-async def article(ctx):
+async def Article(ctx):
     alt,href = scrapper.itsfoss()
     await ctx.send("{}\n{}".format(alt,href))
 
@@ -69,7 +74,7 @@ async def article(ctx):
 # @returns information about cofsug
 #
 @bot.command(name="cofsug")
-async def cofsug(ctx):
+async def About(ctx):
     await ctx.send("COEP's Free Software Users Group is a community of enthusiasts who promote the use of Free Softwares and are strong supporters of Free and Open Source Ideology! ✨ \n\n ")
     await ctx.send("**Visit our website** : https://foss.coep.org.in/cofsug")
 
@@ -90,7 +95,9 @@ async def repositories(ctx,arg):
     names = "\n".join(map(str,names)) 
     links = "\n".join(map(str,links)) 
 
-    embed = nextcord.Embed(title="Github",color=nextcord.Color.green())
+    embed = nextcord.Embed(title="Github",
+                        color=nextcord.Color.green())
+
     embed.add_field(name="Name", value=names, inline="true")
     embed.add_field(name="Link", value=links, inline="true")
     await ctx.send(embed=embed)
@@ -100,11 +107,14 @@ async def repositories(ctx,arg):
 # @returns creates a poll
 #
 @bot.command(name="poll")
-async def poll(ctx,choice1,choice2,*,topic):
+async def Poll(ctx,choice1,choice2,*,topic):
     IST = pytz.timezone('Asia/Kolkata')
-    embed = nextcord.Embed(title=topic, description=f"1️⃣\t{choice1}\n2️⃣\t{choice2}",timestamp=datetime.datetime.now(IST),color=nextcord.Color.green())
+    embed = nextcord.Embed(title=topic, 
+                        description=f"1️⃣\t{choice1}\n2️⃣\t{choice2}",
+                        timestamp=datetime.datetime.now(IST),
+                        color=nextcord.Color.green())
+
     embed.set_footer(text=f"Poll by {ctx.author.name}")
-    # below url link temporary for now 
     embed.set_thumbnail(url=ctx.message.author.display_avatar)
     react = await ctx.send(embed=embed)
 
@@ -113,13 +123,29 @@ async def poll(ctx,choice1,choice2,*,topic):
 
     await ctx.message.delete()
 
+
+#
+# @returns latency of user in miliseconds
+#
+@bot.command(name="ping")
+async def Ping(ctx):
+    embed = nextcord.Embed(
+          title="Ping",
+          description=f"Ping is `{round(bot.latency * 100, 2)}` ms",
+          color=ctx.author.color)
+
+    await ctx.send(embed=embed)
+
+
 #
 # @returns profile information
 #
 @bot.command(name="profile")
 async def Profile(ctx):
     user = ctx.message.author
-    embed = Embed(title=user,color=nextcord.Color.green())
+    embed = Embed(title=user,
+                color=nextcord.Color.green())
+
     userData = {
         "ID" : user.id,
         "Nick": user.nick,
@@ -143,7 +169,9 @@ async def Profile(ctx):
 @bot.command(name="server")
 async def Server(ctx):
     guild = ctx.message.author.guild
-    embed = Embed(title=guild.name,color=nextcord.Color.green())
+    embed = Embed(title=guild.name,
+            color=nextcord.Color.green())
+
     serverData = {
         "Owner" : "CoFSUG",
         "Channels" : len(guild.channels),
@@ -165,7 +193,7 @@ async def Server(ctx):
 #
 @bot.command()
 @commands.has_role('Admin')
-async def clear(ctx, amount = 5):
+async def Clear(ctx, amount = 5):
     await ctx.channel.purge(limit=amount)
 
 
@@ -207,7 +235,7 @@ async def on_command_error(ctx, error):
     elif isinstance(error, commands.CheckFailure):
         await ctx.send("*You do not have the permissions to do this.* ")
     elif isinstance(error, commands.CommandNotFound):
-        await ctx.send("*This command is not listed in my dictionary.*")
+        await ctx.send("*This command is not listed in my dictionary.*\n**Try !help for more info.**")
 
 #
 # @Running the bot
