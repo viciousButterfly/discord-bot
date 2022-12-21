@@ -104,7 +104,7 @@ async def repositories(ctx,arg):
 
 
 #
-# @returns creates a poll
+# @returns creates a poll with two options
 #
 @bot.command(name="poll")
 async def Poll(ctx,choice1,choice2,*,topic):
@@ -125,13 +125,26 @@ async def Poll(ctx,choice1,choice2,*,topic):
 
 
 # #
-# # @returns creates a poll
+# # @returns creates a poll with multiple options
 # #
-# @bot.command(name="poll")
-# async def Poll(ctx,choice1,choice2,*,topic):
+# @bot.command(name="mpoll")
+# async def mPoll(ctx,argc,poll):
 #     IST = pytz.timezone('Asia/Kolkata')
+
+#     description = ""
+#     topic = ""
+
+#     for i in range(len(poll.split())):
+#         if i < argc:
+#             description+=f"{i+1}->\t{poll[i]}"
+#         else:
+#             topic+=f"{poll[i]} "
+        
+#     print(topic)
+#     print(description)
+    
 #     embed = nextcord.Embed(title=topic, 
-#                         description=f"1️⃣\t{choice1}\n2️⃣\t{choice2}",
+#                         description=description,
 #                         timestamp=datetime.datetime.now(IST),
 #                         color=nextcord.Color.green())
 
