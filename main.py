@@ -236,12 +236,13 @@ async def Clear(ctx, amount = 5):
 #
 async def schedule_daily_message():
     now = datetime.datetime.now()
-    # then = now + datetime.timedelta(days=1)
-    then = now.replace(hour=13,minute=38)
+    then = now + datetime.timedelta(days=1)
+    then = then.replace(hour=12,minute=00)
     wait_time = (then-now).total_seconds()
+
     await asyncio.sleep(wait_time)
-    # Channel ID to be changed according to server
-    channel = bot.get_channel(1054287735646584905)
+
+    channel = bot.get_channel(os.getenv("CHANNEL_ID"))
     alt,href = scrapper.itsfoss()
     await channel.send("{}\n{}".format(alt,href))
 
@@ -252,7 +253,7 @@ async def schedule_daily_message():
 @bot.event
 async def on_ready():
     print(f"Logged in as {bot.user.name}")
-    #await schedule_daily_message()
+    await schedule_daily_message()
 
 
 #
