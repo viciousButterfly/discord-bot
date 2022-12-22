@@ -45,7 +45,7 @@ async def Help(ctx):
     embed.add_field(name="Command: socials", value="**Syntax: !socials**\n**_Use:_** Get social media handles of CoFSUG.", inline=False)
     embed.add_field(name="Command: github", value="**Syntax: !github arg**\n**_Use:_** Get top 5 GitHub repos on given argument", inline=False)
     embed.add_field(name="Command: foss", value="**Syntax: !foss**\n**_Use:_** Get latest blog from itsfoss.", inline=False)
-    embed.add_field(name="Command: poll", value="**Syntax: !poll choice1 choice2 Question**\n**_Use:_** Creates a poll for you :)", inline=False)
+    embed.add_field(name="Command: poll", value="**Syntax: !poll \"Question\" c1 c2 ...**\n**_Use:_** Creates a poll for you :)", inline=False)
     embed.add_field(name="Command: profile", value="**Syntax: !profile**\n**_Use:_** Displays your information", inline=False)
     embed.add_field(name="Command: server", value="**Syntax: !server**\n**_Use:_** Displays server information", inline=False)
     embed.add_field(name="Command: ping", value="**Syntax: !ping**\n**_Use:_** Displays user latency", inline=False)
@@ -104,13 +104,23 @@ async def repositories(ctx,arg):
 
 
 #
-# @returns creates a poll with two options
+# @returns creates a poll 
 #
 @bot.command(name="poll")
-async def Poll(ctx,choice1,choice2,*,topic):
+async def Poll(ctx,question,*choices):
     IST = pytz.timezone('Asia/Kolkata')
-    embed = nextcord.Embed(title=topic, 
-                        description=f"1️⃣\t{choice1}\n2️⃣\t{choice2}",
+    
+    if len(choices) > 10:
+        return await ctx.send("**Too many options in the given poll, Max options count restricted to 10!**")
+
+    reactions = ["1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣", "6️⃣", "7️⃣", "8️⃣", "9️⃣", "🔟"]
+
+    description = ""
+    for i in range(len(choices)):
+        description+=f"{reactions[i]} {choices[i]}\n"
+
+    embed = nextcord.Embed(title=question, 
+                        description=description,
                         timestamp=datetime.datetime.now(IST),
                         color=nextcord.Color.green())
 
@@ -118,44 +128,10 @@ async def Poll(ctx,choice1,choice2,*,topic):
     embed.set_thumbnail(url=ctx.message.author.display_avatar)
     react = await ctx.send(embed=embed)
 
-    await react.add_reaction("1️⃣")
-    await react.add_reaction("2️⃣")
+    for i in range(len(choices)) :
+        await react.add_reaction(reactions[i])
 
     await ctx.message.delete()
-
-
-# #
-# # @returns creates a poll with multiple options
-# #
-# @bot.command(name="mpoll")
-# async def mPoll(ctx,argc,poll):
-#     IST = pytz.timezone('Asia/Kolkata')
-
-#     description = ""
-#     topic = ""
-
-#     for i in range(len(poll.split())):
-#         if i < argc:
-#             description+=f"{i+1}->\t{poll[i]}"
-#         else:
-#             topic+=f"{poll[i]} "
-        
-#     print(topic)
-#     print(description)
-    
-#     embed = nextcord.Embed(title=topic, 
-#                         description=description,
-#                         timestamp=datetime.datetime.now(IST),
-#                         color=nextcord.Color.green())
-
-#     embed.set_footer(text=f"Poll by {ctx.author.name}")
-#     embed.set_thumbnail(url=ctx.message.author.display_avatar)
-#     react = await ctx.send(embed=embed)
-
-#     await react.add_reaction("1️⃣")
-#     await react.add_reaction("2️⃣")
-
-#     await ctx.message.delete()
 
 
 #
