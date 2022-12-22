@@ -4,7 +4,6 @@ from nextcord import Embed
 import os
 from dotenv import load_dotenv
 import scrapper 
-import github
 import utils
 import datetime
 import pytz
@@ -49,6 +48,7 @@ async def Help(ctx):
     embed.add_field(name="Command: profile", value="**Syntax: !profile**\n**_Use:_** Displays your information", inline=False)
     embed.add_field(name="Command: server", value="**Syntax: !server**\n**_Use:_** Displays server information", inline=False)
     embed.add_field(name="Command: ping", value="**Syntax: !ping**\n**_Use:_** Displays user latency", inline=False)
+    embed.add_field(name="Command: yt", value="**Syntax: !yt**\n**_Use:_** Gets Youtube video according to query", inline=False)
 
     await ctx.send(embed=embed)
 
@@ -83,9 +83,9 @@ async def About(ctx):
 # @returns finds top5 repos for the given argument
 #
 @bot.command(name="github")
-async def repositories(ctx,arg):
+async def Repositories(ctx,arg):
 
-    repos = github.scrape(arg)
+    repos = scrapper.github(arg)
     names = []
     links = []
     for item in repos:
@@ -101,6 +101,15 @@ async def repositories(ctx,arg):
     embed.add_field(name="Name", value=names, inline="true")
     embed.add_field(name="Link", value=links, inline="true")
     await ctx.send(embed=embed)
+
+
+#
+# @ returns top youtube video for the given query
+#
+@bot.command(name="yt")
+async def Youtube(ctx,*arg):
+    query = " ".join(arg)
+    await ctx.reply(scrapper.youtube(query))
 
 
 #

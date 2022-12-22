@@ -1,6 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
- 
+import os
 
 def itsfoss():
 
@@ -22,3 +22,35 @@ def itsfoss():
     href = a.get('href')
 
     return alt,href
+
+def github(arg):
+
+    # Making a GET request
+    r = requests.get(url='https://api.github.com/search/repositories?q={}&page=1&per_page=5'.format(arg))
+
+    # Extracting json
+    data = r.json()
+
+    # Extracting name and url from json
+    count = 0
+    repos = []
+    for i in range(0,5) :
+        if count >= data["total_count"]:
+            break
+        repos.append((data["items"][i]["full_name"],data["items"][i]["html_url"]))
+        count+=1
+
+    return repos
+
+def youtube(arg):
+
+    # Making a GET request
+    r = requests.get(url='https://www.googleapis.com/youtube/v3/search?key={}&part=snippet&type=video&maxResults=1&q={}'.format(os.getenv("API_KEY"),arg))
+
+    # Extracting JSON
+    data = r.json()
+
+    # Extracting videoID
+    videoId = data["items"][0]["id"]["videoId"]
+
+    return f"https://youtube.com/watch?v={videoId}"
