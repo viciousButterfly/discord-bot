@@ -1,6 +1,6 @@
 ## CoFSUG discord bot
 
-### Installing python3 (configuring python environment with pip3)
+<!-- ### Installing python3 (configuring python environment with pip3)
 
 ```
 sudo apt install python3
@@ -11,13 +11,17 @@ wget https://bootstrap.pypa.io/get-pip.py
 ```
 ```
 sudo python3 get-pip.py
-```
-### How to use
+``` -->
+### Use Locally
 
 ```
-pip3 install -r requirements.txt
+$ pip3 install -r requirements.txt
 ```
 
 ```
-python3 main.py
+$ python3 main.py
 ```
+
+## Environment Variables used
+- `DISCORD_TOKEN`
+- `CHANNEL_ID`
