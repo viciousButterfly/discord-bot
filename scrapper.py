@@ -54,3 +54,17 @@ def youtube(arg):
     videoId = data["items"][0]["id"]["videoId"]
 
     return f"https://youtube.com/watch?v={videoId}"
+
+def dictionary(arg):
+
+    # Making a GET request
+    r = requests.get(url="https://api.dictionaryapi.dev/api/v2/entries/en/{}".format(arg))
+
+    # Extracting JSON
+    data = r.json()
+    
+    # Extracting word and meaning
+    word = data[0]["word"]
+    meaning = data[0]["meanings"][0]["definitions"][0]["definition"]
+
+    return word,meaning
