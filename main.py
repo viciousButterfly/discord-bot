@@ -76,8 +76,7 @@ async def Article(ctx):
 #
 @bot.command(name="cofsug")
 async def About(ctx):
-    await ctx.send("COEP's Free Software Users Group is a community of enthusiasts who promote the use of Free Softwares and are strong supporters of Free and Open Source Ideology! ✨ \n\n ")
-    await ctx.send("**Visit our website** : https://foss.coep.org.in/cofsug")
+    await ctx.send("**COEP's Free Software Users Group** is a community of enthusiasts who promote the use of Free Softwares and are strong supporters of Free and Open Source Ideology! ✨ \n**Visit our website** : https://foss.coep.org.in/cofsug\n")
 
 
 #
@@ -110,6 +109,9 @@ async def Repositories(ctx,arg):
 @bot.command(name="yt")
 async def Youtube(ctx,*arg):
     query = " ".join(arg)
+    if query == "":
+        return await ctx.send("*Command is missing an argument!* ")
+
     await ctx.reply(scrapper.youtube(query))
 
 
