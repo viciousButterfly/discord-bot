@@ -27,6 +27,10 @@ async def greeting(ctx):
         "I hope you're having a great week.",
         "I hope you're having a wonderful day.",
         "Thanks for getting in touch.",
+        "Good to see you.",
+        "how can I help you?",
+        "Our services are not available right now, your request has been queued and you will receive assistance during our normal hours.\nJust Kidding!",
+        f"Sorry for the `{round(bot.latency * 100, 2)}` ms late reply :/",
         "Happy {}.".format(utils.findDay())
     ]
     await ctx.send(f"Hello! {ctx.author.mention}, {random.choice(greetings)}")
