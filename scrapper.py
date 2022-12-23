@@ -64,7 +64,9 @@ def dictionary(arg):
     data = r.json()
     
     # Extracting word and meaning
-    word = data[0]["word"]
-    meaning = data[0]["meanings"][0]["definitions"][0]["definition"]
-
-    return word,meaning
+    try:
+        word = data[0]["word"]
+        meaning = data[0]["meanings"][0]["definitions"][0]["definition"]
+        return word,meaning
+    except:
+        return False,False

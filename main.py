@@ -42,13 +42,14 @@ async def Help(ctx):
     embed.add_field(name="Command: hi", value="**Syntax: !hi** \n**_Use:_** Greets you...", inline=False)
     embed.add_field(name="Command: cofsug", value="**Syntax: !cofsug**\n**_Use:_** Get information about CoFSUG.", inline=False)
     embed.add_field(name="Command: socials", value="**Syntax: !socials**\n**_Use:_** Get social media handles of CoFSUG.", inline=False)
-    embed.add_field(name="Command: github", value="**Syntax: !github arg**\n**_Use:_** Get top 5 GitHub repos on given argument", inline=False)
+    embed.add_field(name="Command: github", value="**Syntax: !github <query>**\n**_Use:_** Get top 5 GitHub repos on given <query>", inline=False)
     embed.add_field(name="Command: foss", value="**Syntax: !foss**\n**_Use:_** Get latest blog from itsfoss.", inline=False)
-    embed.add_field(name="Command: poll", value="**Syntax: !poll \"Question\" c1 c2 ...**\n**_Use:_** Creates a poll for you :)", inline=False)
+    embed.add_field(name="Command: poll", value="**Syntax: !poll \<Question>\" c1 c2 ...**\n**_Use:_** Creates a poll for you :)", inline=False)
     embed.add_field(name="Command: profile", value="**Syntax: !profile**\n**_Use:_** Displays your information", inline=False)
     embed.add_field(name="Command: server", value="**Syntax: !server**\n**_Use:_** Displays server information", inline=False)
-    embed.add_field(name="Command: ping", value="**Syntax: !ping**\n**_Use:_** Displays user latency", inline=False)
-    embed.add_field(name="Command: yt", value="**Syntax: !yt**\n**_Use:_** Gets Youtube video according to query", inline=False)
+    embed.add_field(name="Command: ping", value="**Syntax: !ping**\n**_Use:_** Displays latency", inline=False)
+    embed.add_field(name="Command: yt", value="**Syntax: !yt <query>**\n**_Use:_** Gets Youtube video according to query", inline=False)
+    embed.add_field(name="Command: dict", value="**Syntax: !dict <word>**\n**_Use:_** Gets dictionary meaning of word", inline=False)
 
     await ctx.send(embed=embed)
 
@@ -113,6 +114,22 @@ async def Youtube(ctx,*arg):
 
 
 #
+# @returns dictionary meaning of a word
+#
+@bot.command(name="dict")
+async def Dictionary(ctx,arg):
+    word,meaning = scrapper.dictionary(arg)
+
+    if word == False:
+        return await ctx.reply("**Sorry pal, we couldn't find definitions for the word you were looking for.**")
+    
+    embed = nextcord.Embed(title=word, 
+                        description=meaning,
+                        color=nextcord.Color.purple())
+    await ctx.reply(embed=embed)
+
+
+#
 # @returns creates a poll 
 #
 @bot.command(name="poll")
@@ -144,7 +161,7 @@ async def Poll(ctx,question,*choices):
 
 
 #
-# @returns latency of user in miliseconds
+# @returns latency in miliseconds
 #
 @bot.command(name="ping")
 async def Ping(ctx):
