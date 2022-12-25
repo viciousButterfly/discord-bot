@@ -1,7 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 import os
-# from urllib
+import random
 
 def itsfoss():
 
@@ -12,16 +12,20 @@ def itsfoss():
     soup = BeautifulSoup(r.content, 'html.parser')
     
     # Find articles
-    s = soup.find('article')
+    s = soup.find_all('article')
 
-    # Find img tag for title
-    img = s.find('img',class_="attachment-medium_large")
+    # Take random article
+    article = s[random.randint(0,len(s)-1)]
+
+    # # Find img tag for title
+    img = article.find('img')
     alt = img.get('alt')
 
     # Find a tag for link
-    a = s.find('a',class_="post-more-link")
+    a = article.find('a',class_="post-more-link")
     href = a.get('href')
 
+    # return alt,href
     return alt,href
 
 def omgubuntu():
@@ -33,17 +37,44 @@ def omgubuntu():
     # Parsing the HTML
     soup = BeautifulSoup(r.content, 'html.parser')
 
-    # Find articles
-    s = soup.find('div',class_='sbs-layout__item')
+    # Find divs
+    s = soup.find_all('div',class_='sbs-layout__item')
+
+    # Find random article
+    article = s[random.randint(0,len(s)-1)]
 
     # Find a tag for link
-    a = s.find('a', class_='layout__title-link')
+    a = article.find('a', class_='layout__title-link')
 
     # Find alt and href
     alt = a.text
     href = a.get('href')
 
     return alt,href
+
+def phoronix():
+
+    # Making a GET request
+    r = requests.get('https://www.phoronix.com/news')
+
+    # Parsing the HTML
+    soup = BeautifulSoup(r.content, 'html.parser')
+
+    #Find all popular divs
+    div = soup.find_all('div',class_='popular-list')
+
+    # Take random article
+    article = div[random.randint(0,len(div)-1)]
+
+    # Find a tag from article
+    a = article.find('a')
+
+    # Find alt and href
+    alt = a.text
+    href = a.get('href')
+
+    return alt,"https://www.phoronix.com/"+href
+
 
 def github(arg):
 

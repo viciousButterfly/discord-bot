@@ -115,12 +115,14 @@ async def Socials(ctx):
 #
 @bot.command(name="article")
 async def Article(ctx):
-    num = random.randint(0,9)
+    num = random.randint(0,20)
 
-    if num%2==0:
+    if num%3==0:
         alt,href = scrapper.itsfoss()
-    else:
+    elif num%3==1:
         alt,href = scrapper.omgubuntu()
+    else:
+        alt,href = scrapper.phoronix()
 
     await ctx.send("{}\n{}".format(alt,href))
 
