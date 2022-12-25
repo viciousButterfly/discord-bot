@@ -25,3 +25,4 @@ $ python3 main.py
 ## Environment Variables used
 - `DISCORD_TOKEN`
 - `CHANNEL_ID`
+- `API_KEY` (Google API key)
