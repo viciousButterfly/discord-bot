@@ -49,7 +49,7 @@ def createHelpEmbeded(pageNum=0, inline=False):
                         ["Command: github","**Syntax: !github <query>**\n**_Use:_** Get top 5 GitHub repos on given <query>"]
                     ],
                     [
-                        ["Command: article","**Syntax: !article**\n**_Use:_** Get latest FOSS blogs"],
+                        ["Command: article","**Syntax: !article**\n**_Use:_** Get latest blogs related to FOSS and tech"],
                         ["Command: poll","**Syntax: !poll \<Question>\" c1 c2 ...**\n**_Use:_** Creates a poll for you :)"],
                         ["Command: profile","**Syntax: !profile**\n**_Use:_** Displays your information"],
                         ["Command: server","**Syntax: !server**\n**_Use:_** Displays server information"]
@@ -75,27 +75,6 @@ def createHelpEmbeded(pageNum=0, inline=False):
 #
 @bot.command(name="help")
 async def Help(ctx):
-
-    currentPage = 0
-
-    # async def next_callback(interaction):
-    #     nonlocal currentPage, sent_msg
-    #     currentPage += 1
-    #     sent_msg.edit(embed=createHelpEmbeded(pageNum=currentPage, View=HelpView))
-
-    # async def previous_callback(interaction):
-    #     nonlocal currentPage, sent_msg
-    #     currentPage -= 1
-    #     sent_msg.edit(embed=createHelpEmbeded(pageNum=currentPage, View=HelpView))
-
-    # nextButton = nextcord.ui.Button(label=">",style=nextcord.ButtonStyle.blurple)
-    # nextButton.callback = next_callback 
-    # previousButton = Button(label="<",style=nextcord.ButtonStyle.blurple)
-    # previousButton.callback = previous_callback
-
-    # HelpView = View()
-    # HelpView.add_item(nextButton)
-    # HelpView.add_item(previousButton)
 
     await ctx.send(embed=createHelpEmbeded(pageNum=0))
     await ctx.send(embed=createHelpEmbeded(pageNum=1))
