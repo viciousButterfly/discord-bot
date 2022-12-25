@@ -1,6 +1,7 @@
 import nextcord
 from nextcord.ext import commands
 from nextcord import Embed
+from nextcord.ui  import Button, View
 import os
 from dotenv import load_dotenv
 import scrapper 
@@ -37,25 +38,68 @@ async def greeting(ctx):
 
 
 #
+# @returns custom embedded message
+#
+def createHelpEmbeded(pageNum=0, inline=False):
+    helpGuide = [
+                    [
+                        ["Command: hi","**Syntax: !hi** \n**_Use:_** Greets you..."],
+                        ["Command: cofsug","**Syntax: !cofsug**\n**_Use:_** Get information about CoFSUG."],
+                        ["Command: socials","**Syntax: !socials**\n**_Use:_** Get social media handles of CoFSUG."],
+                        ["Command: github","**Syntax: !github <query>**\n**_Use:_** Get top 5 GitHub repos on given <query>"]
+                    ],
+                    [
+                        ["Command: foss","**Syntax: !foss**\n**_Use:_** Get latest blog from itsfoss."],
+                        ["Command: poll","**Syntax: !poll \<Question>\" c1 c2 ...**\n**_Use:_** Creates a poll for you :)"],
+                        ["Command: profile","**Syntax: !profile**\n**_Use:_** Displays your information"],
+                        ["Command: server","**Syntax: !server**\n**_Use:_** Displays server information"]
+                    ],
+                    [
+                        ["Command: ping","**Syntax: !ping**\n**_Use:_** Displays latency"],
+                        ["Command: yt","**Syntax: !yt <query>**\n**_Use:_** Gets Youtube video according to query"],
+                        ["Command: dict","**Syntax: !dict <word>**\n**_Use:_** Gets dictionary meaning of word"]
+                    ]
+                ]
+
+    embed = Embed(title="Bot commands", color=0x88B04B)
+
+    for name,value in helpGuide[pageNum]:
+        embed.add_field(name=name,value=value,inline=inline)
+        embed.set_footer(text=f"Page {pageNum+1} of {len(helpGuide)}")
+
+    return embed
+
+
+#
 # @returns help messages for bot commands
 #
 @bot.command(name="help")
 async def Help(ctx):
-    embed=Embed(title="Bot Commands", color=0x0080ff)
 
-    embed.add_field(name="Command: hi", value="**Syntax: !hi** \n**_Use:_** Greets you...", inline=False)
-    embed.add_field(name="Command: cofsug", value="**Syntax: !cofsug**\n**_Use:_** Get information about CoFSUG.", inline=False)
-    embed.add_field(name="Command: socials", value="**Syntax: !socials**\n**_Use:_** Get social media handles of CoFSUG.", inline=False)
-    embed.add_field(name="Command: github", value="**Syntax: !github <query>**\n**_Use:_** Get top 5 GitHub repos on given <query>", inline=False)
-    embed.add_field(name="Command: foss", value="**Syntax: !foss**\n**_Use:_** Get latest blog from itsfoss.", inline=False)
-    embed.add_field(name="Command: poll", value="**Syntax: !poll \<Question>\" c1 c2 ...**\n**_Use:_** Creates a poll for you :)", inline=False)
-    embed.add_field(name="Command: profile", value="**Syntax: !profile**\n**_Use:_** Displays your information", inline=False)
-    embed.add_field(name="Command: server", value="**Syntax: !server**\n**_Use:_** Displays server information", inline=False)
-    embed.add_field(name="Command: ping", value="**Syntax: !ping**\n**_Use:_** Displays latency", inline=False)
-    embed.add_field(name="Command: yt", value="**Syntax: !yt <query>**\n**_Use:_** Gets Youtube video according to query", inline=False)
-    embed.add_field(name="Command: dict", value="**Syntax: !dict <word>**\n**_Use:_** Gets dictionary meaning of word", inline=False)
+    currentPage = 0
 
-    await ctx.send(embed=embed)
+    # async def next_callback(interaction):
+    #     nonlocal currentPage, sent_msg
+    #     currentPage += 1
+    #     sent_msg.edit(embed=createHelpEmbeded(pageNum=currentPage, View=HelpView))
+
+    # async def previous_callback(interaction):
+    #     nonlocal currentPage, sent_msg
+    #     currentPage -= 1
+    #     sent_msg.edit(embed=createHelpEmbeded(pageNum=currentPage, View=HelpView))
+
+    # nextButton = nextcord.ui.Button(label=">",style=nextcord.ButtonStyle.blurple)
+    # nextButton.callback = next_callback 
+    # previousButton = Button(label="<",style=nextcord.ButtonStyle.blurple)
+    # previousButton.callback = previous_callback
+
+    # HelpView = View()
+    # HelpView.add_item(nextButton)
+    # HelpView.add_item(previousButton)
+
+    await ctx.send(embed=createHelpEmbeded(pageNum=0))
+    await ctx.send(embed=createHelpEmbeded(pageNum=1))
+    await ctx.send(embed=createHelpEmbeded(pageNum=2))
 
 
 #
