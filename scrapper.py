@@ -73,7 +73,7 @@ def phoronix():
     alt = a.text
     href = a.get('href')
 
-    return alt,"https://www.phoronix.com/"+href
+    return alt,"https://www.phoronix.com"+href
 
 
 def github(arg):
