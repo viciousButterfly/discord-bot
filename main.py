@@ -49,7 +49,7 @@ def createHelpEmbeded(pageNum=0, inline=False):
                         ["Command: github","**Syntax: !github <query>**\n**_Use:_** Get top 5 GitHub repos on given <query>"]
                     ],
                     [
-                        ["Command: foss","**Syntax: !foss**\n**_Use:_** Get latest blog from itsfoss."],
+                        ["Command: article","**Syntax: !article**\n**_Use:_** Get latest FOSS blogs"],
                         ["Command: poll","**Syntax: !poll \<Question>\" c1 c2 ...**\n**_Use:_** Creates a poll for you :)"],
                         ["Command: profile","**Syntax: !profile**\n**_Use:_** Displays your information"],
                         ["Command: server","**Syntax: !server**\n**_Use:_** Displays server information"]
@@ -113,9 +113,15 @@ async def Socials(ctx):
 #
 # @returns scraps itsfoss's recent blog
 #
-@bot.command(name="foss")
+@bot.command(name="article")
 async def Article(ctx):
-    alt,href = scrapper.itsfoss()
+    num = random.randint(0,9)
+
+    if num%2==0:
+        alt,href = scrapper.itsfoss()
+    else:
+        alt,href = scrapper.omgubuntu()
+
     await ctx.send("{}\n{}".format(alt,href))
 
 

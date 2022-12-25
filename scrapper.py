@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 import os
+# from urllib
 
 def itsfoss():
 
@@ -19,6 +20,27 @@ def itsfoss():
 
     # Find a tag for link
     a = s.find('a',class_="post-more-link")
+    href = a.get('href')
+
+    return alt,href
+
+def omgubuntu():
+
+    # Making a GET request
+    r = requests.get('https://www.omgubuntu.co.uk/category/news')
+
+
+    # Parsing the HTML
+    soup = BeautifulSoup(r.content, 'html.parser')
+
+    # Find articles
+    s = soup.find('div',class_='sbs-layout__item')
+
+    # Find a tag for link
+    a = s.find('a', class_='layout__title-link')
+
+    # Find alt and href
+    alt = a.text
     href = a.get('href')
 
     return alt,href
