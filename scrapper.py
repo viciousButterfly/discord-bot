@@ -6,7 +6,7 @@ import random
 def itsfoss():
 
     # Making a GET request
-    r = requests.get('https://itsfoss.com/all-blog-posts/')
+    r = requests.get('https://itsfoss.com/')
 
     # Parsing the HTML
     soup = BeautifulSoup(r.content, 'html.parser')
@@ -17,12 +17,12 @@ def itsfoss():
     # Take random article
     article = s[random.randint(0,len(s)-1)]
 
-    # # Find img tag for title
+    # Find img tag for title
     img = article.find('img')
     alt = img.get('alt')
 
-    # Find a tag for link
-    a = article.find('a',class_="post-more-link")
+    # # Find a tag for link
+    a = article.find('a')
     href = a.get('href')
 
     # return alt,href
