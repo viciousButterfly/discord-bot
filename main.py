@@ -103,6 +103,9 @@ async def Article(ctx):
     else:
         alt,href = scrapper.phoronix()
 
+    if alt == False:
+        return await ctx.reply("**Sorry, Unable to fetch articles at this moment 🙁!**")
+
     await ctx.send("{}\n{}".format(alt,href))
 
 
@@ -121,6 +124,10 @@ async def About(ctx):
 async def Repositories(ctx,arg):
 
     repos = scrapper.github(arg)
+
+    if repos == False:
+        return await ctx.reply("**Sorry, couldn't fetch the repositories due to unknown reasons 🙁!**")
+
     names = []
     links = []
     for item in repos:
@@ -146,8 +153,13 @@ async def Youtube(ctx,*arg):
     query = " ".join(arg)
     if query == "":
         return await ctx.send("*Command is missing an argument!* ")
+    
+    href = scrapper.youtube(query)
 
-    await ctx.reply(scrapper.youtube(query))
+    if href == False:
+        return await ctx.reply("**Sorry, couldn't fetch the video you wanted at this moment 🙁!**")
+
+    await ctx.reply(href)
 
 
 #
