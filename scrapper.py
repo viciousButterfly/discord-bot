@@ -26,7 +26,7 @@ def itsfoss():
     href = a.get('href')
 
     # return alt,href
-    return alt,href
+    return alt,"https://itsfoss.com"+href
 
 def omgubuntu():
 
