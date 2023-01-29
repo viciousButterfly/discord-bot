@@ -97,11 +97,11 @@ async def Article(ctx):
     num = random.randint(0,20)
 
     if num%3==0:
-        alt,href = scrapper.itsfoss()
+        alt,href = scrapper.Article.itsfoss()
     elif num%3==1:
-        alt,href = scrapper.omgubuntu()
+        alt,href = scrapper.Article.omgubuntu()
     else:
-        alt,href = scrapper.phoronix()
+        alt,href = scrapper.Article.phoronix()
 
     if alt == False:
         return await ctx.reply("**Sorry, Unable to fetch articles at this moment 🙁!**")
@@ -123,7 +123,7 @@ async def About(ctx):
 @bot.command(name="github")
 async def Repositories(ctx,arg):
 
-    repos = scrapper.github(arg)
+    repos = scrapper.API.github(arg)
 
     if repos == False:
         return await ctx.reply("**Sorry, couldn't fetch the repositories due to unknown reasons 🙁!**")
@@ -154,7 +154,7 @@ async def Youtube(ctx,*arg):
     if query == "":
         return await ctx.send("*Command is missing an argument!* ")
     
-    href = scrapper.youtube(query)
+    href = scrapper.API.youtube(query)
 
     if href == False:
         return await ctx.reply("**Sorry, couldn't fetch the video you wanted at this moment 🙁!**")
@@ -167,7 +167,7 @@ async def Youtube(ctx,*arg):
 #
 @bot.command(name="dict")
 async def Dictionary(ctx,arg):
-    word,meaning = scrapper.dictionary(arg)
+    word,meaning = scrapper.API.dictionary(arg)
 
     if word == False:
         return await ctx.reply("**Sorry pal, we couldn't find definitions for the word you were looking for.**")
